@@ -3,7 +3,6 @@ import { useAiState } from '@/context/ai-state-context';
 import { useSubtitle } from '@/context/subtitle-context';
 import { useChatHistory } from '@/context/chat-history-context';
 import { audioTaskQueue } from '@/utils/task-queue';
-import { useLive2DModel } from '@/context/live2d-model-context';
 import { toaster } from '@/components/ui/toaster';
 import { useWebSocket } from '@/context/websocket-context';
 import { DisplayText } from '@/services/websocket-service';
@@ -22,12 +21,10 @@ export const useAudioTask = () => {
   const { aiState, backendSynthComplete, setBackendSynthComplete } = useAiState();
   const { setSubtitleText } = useSubtitle();
   const { appendResponse, appendAIMessage } = useChatHistory();
-  const { currentModel } = useLive2DModel();
   const { sendMessage } = useWebSocket();
 
   const stateRef = useRef({
     aiState,
-    currentModel,
     setSubtitleText,
     appendResponse,
     appendAIMessage,
@@ -35,7 +32,6 @@ export const useAudioTask = () => {
 
   stateRef.current = {
     aiState,
-    currentModel,
     setSubtitleText,
     appendResponse,
     appendAIMessage,
@@ -44,7 +40,6 @@ export const useAudioTask = () => {
   const handleAudioPlayback = (options: AudioTaskOptions): Promise<void> => new Promise((resolve) => {
     const {
       aiState: currentAiState,
-      currentModel: model,
       setSubtitleText: updateSubtitle,
       appendResponse: appendText,
       appendAIMessage: appendAI,
@@ -73,32 +68,11 @@ export const useAudioTask = () => {
       }
     }
 
-    if (!model) {
-      console.error('Model not initialized');
-      resolve();
-      return;
-    }
 
     try {
-      if (expressions?.[0] !== undefined) {
-        model.expression(expressions[0]);
-      }
 
       let isFinished = false;
       if (audioBase64) {
-        model.speak(`data:audio/wav;base64,${audioBase64}`, {
-          onFinish: () => {
-            console.log("Voiceline is over");
-            isFinished = true;
-            resolve();
-          },
-          onError: (error) => {
-            console.error("Audio playback error:", error);
-            isFinished = true;
-            resolve();
-          },
-        });
-      } else {
         resolve();
       }
 

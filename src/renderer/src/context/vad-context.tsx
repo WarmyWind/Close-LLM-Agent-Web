@@ -3,7 +3,8 @@ import {
   createContext, useContext, useRef, useCallback, useEffect, useReducer, useMemo,
 } from 'react';
 import { MicVAD } from '@ricky0123/vad-web';
-import { useInterrupt } from '@/components/canvas/live2d';
+// import { useInterrupt } from '@/components/canvas/live2d';
+import { useInterrupt } from '@/hooks/utils/use-interrupt';
 import { audioTaskQueue } from '@/utils/task-queue';
 import { useSendAudio } from '@/hooks/utils/use-send-audio';
 import { SubtitleContext } from './subtitle-context';

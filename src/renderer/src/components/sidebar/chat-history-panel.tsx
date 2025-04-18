@@ -86,16 +86,17 @@ function ChatHistoryPanel(): JSX.Element {
         <ChatContainer>
           <ChatMessageList>
             {validMessages.length === 0 ? (
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                height="100%"
-                color="whiteAlpha.500"
-                fontSize="sm"
-              >
-                No messages yet. Start a conversation!
-              </Box>
+              <ChatMessage
+                key="no-messages"
+                model={{
+                  message: "No messages yet. Start a conversation!",
+                  sentTime: "",
+                  sender: "",
+                  direction: "incoming",
+                  position: "single",
+                }}
+                avatarSpacer={false}
+              />
             ) : (
               validMessages.map((msg) => (
                 <ChatMessage

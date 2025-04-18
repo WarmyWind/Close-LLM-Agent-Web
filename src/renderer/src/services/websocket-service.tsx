@@ -1,6 +1,5 @@
 /* eslint-disable no-use-before-define */
 import { Subject } from 'rxjs';
-import { ModelInfo } from '@/context/live2d-config-context';
 import { HistoryInfo } from '@/context/websocket-context';
 import { ConfigFile } from '@/context/character-config-context';
 import { toaster } from '@/components/ui/toaster';
@@ -48,7 +47,6 @@ export interface MessageEvent {
   files?: BackgroundFile[];
   actions?: Actions;
   text?: string;
-  model_info?: ModelInfo;
   conf_name?: string;
   conf_uid?: string;
   uids?: string[];

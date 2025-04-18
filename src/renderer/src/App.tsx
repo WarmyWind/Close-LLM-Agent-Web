@@ -122,6 +122,7 @@ function App(): JSX.Element {
                                     {mode === 'pet' && (
                                       <InputSubtitle isPet={mode === 'pet'} />
                                     )} */}
+                                    <InputSubtitle isPet={mode === 'pet'} />
                                   </>
                                 )}
                               </WebSocketHandler>
