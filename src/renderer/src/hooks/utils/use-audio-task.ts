@@ -70,12 +70,28 @@ export const useAudioTask = () => {
 
 
     try {
-
       let isFinished = false;
       if (audioBase64) {
+        // 根据实际的音频类型调整 MIME type
+        const audio = new Audio(`data:audio/wav;base64,${audioBase64}`);
+        audio.play()
+          .then(() => {
+            // 当音频播放结束后，resolve Promise
+            audio.onended = () => {
+              isFinished = true;
+              resolve();
+            };
+          })
+          .catch((err) => {
+            console.error('Audio playback error:', err);
+            isFinished = true;
+            resolve();
+          });
+        return;
+      } else {
         resolve();
       }
-
+      
       const checkFinished = () => {
         if (!isFinished) {
           setTimeout(checkFinished, 100);
